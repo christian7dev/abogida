@@ -13,12 +13,12 @@ class QuizPage extends StatefulWidget {
 const c_hight = 70.0;
 const c_width = 400.0;
 int page = 0;
-List<Color> colorA = [Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white];
-List<Color> colorB = [Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white];
-List<Color> colorC = [Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white];
-List<Color> colorD = [Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white];
 
 class _QuizPageState extends State<QuizPage> {
+  List<Color> colorA = [Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white];
+  List<Color> colorB = [Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white];
+  List<Color> colorC = [Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white];
+  List<Color> colorD = [Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white , Colors.white];
 
   @override
   Widget build(BuildContext context) {
