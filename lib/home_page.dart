@@ -1,7 +1,6 @@
 import 'package:abogida/Pages/class_page.dart';
-import 'package:abogida/Pages/quiz_starter_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 
 
 class App extends StatefulWidget {
@@ -17,105 +16,190 @@ class _AppState extends State<App> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            title: title(),
-            centerTitle: true,
-            bottom:  TabBar(
-              labelColor: Colors.black,
-              indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.blue
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: title(),
+          centerTitle: true,
+          bottom: TabBar(
+            padding:const EdgeInsets.all(10),
+            labelColor: Colors.black,
+            indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(30), color: Colors.blue),
+            tabs: const [
+              Tab(
+                child: Text(
+                  "POST",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
-              tabs:const [
-                Tab(
-                  child: Text(
-                      "POST",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
+              Tab(
+                child: Text(
+                  "CLASS",
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                Tab(
-                  child: Text(
-                    "CLASS",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          body: TabBarView(
-            children: [
-              ListView.builder(
-                  itemCount: 2,
-                  itemBuilder: (context , index){
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: 100,
-                        color: Colors.teal,
-                      ),
-                    );
-                  }),
-
-              //==================================================================
-
-              ListView.builder(
-                  itemCount: 2,
-                  itemBuilder: (context , index){
-                    return Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: GestureDetector(
-                        onTap: (){
-                          Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => ClassPage()
-                              ),
-                          );
-                        },
-                        child: Container(
-                          height: 100,
-                          decoration:const BoxDecoration(
-                            color: Colors.deepPurple,
-                          ),
-                        ),
-                      ),
-                    );
-                  })
+              ),
             ],
-          )
+          ),
+        ),
+        body:TabBarView(
+                children: [
+                  //                   post page
+                  // ==================================================================
+                  StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection('post').orderBy('time' , descending: true).snapshots(),
+                      builder: (context , snapshot){
+                        if(snapshot.connectionState == ConnectionState.waiting){
+                          return const Center(child: CircularProgressIndicator(),);
+                        }
+                        return ListView.builder(
+                            itemCount: snapshot.data!.size,
+                            itemBuilder: (context, index) {
+                              var data = snapshot.data!.docs[index].data();
+                              Timestamp time = data["time"];
+                              DateTime date = time.toDate();
+                              return Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Container(
+                                  constraints:const BoxConstraints(
+                                    minHeight: 100,
+
+                                  ),
+                                  decoration:BoxDecoration(
+                                      color: Colors.grey.shade700,
+                                      borderRadius: BorderRadius.circular(20),
+                                      boxShadow:const [
+                                        BoxShadow(
+                                          color: Colors.black,
+                                          offset: Offset(0, 0),
+                                          blurRadius: 10,
+                                        ),
+                                      ]
+                                  ),
+                                  child: Column(
+                                    children:[
+                                      Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(25.0),
+                                          child: Text(
+                                            data["message"],
+                                            style:const TextStyle(
+                                                fontSize: 17,
+                                                color: Colors.white
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        "${date.hour}:${date.minute}\t\t${date.day}/${date.month}/${date.year}",
+                                        style:const TextStyle(
+                                          color: Colors.white70
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
+                      }),
+
+                  //                   class page
+                  // ==================================================================
+                  StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection('class').orderBy("time" ,descending: true).snapshots(),
+                      builder: (context , snapshot){
+                      if(snapshot.connectionState == ConnectionState.waiting){
+                        return const Center(child: CircularProgressIndicator(),);
+                      }
+                        return ListView.builder(
+                            itemCount: snapshot.data!.size,
+                            itemBuilder: (context, index){
+                              var data = snapshot.data!.docs[index].data();
+                              String classid = snapshot.data!.docs[index].id;
+                              Timestamp time = data["time"];
+                              DateTime date = time.toDate();
+                              return Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) => ClassPage(classid: classid, classname: data['class_name'],)),
+                                    );},
+                                  child: Container(
+                                    constraints:const BoxConstraints(
+                                        minHeight: 100
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.circular(20)
+                                    ),
+                                    child:  Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              data['class_name'].toString().toUpperCase(),
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold
+                                              ),
+                                            ),
+                                          ),
+
+
+                                          SizedBox(
+                                            width: 300,
+                                            child: Text(
+                                              data['class_description'],
+                                              style:const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 17,
+                                              ),
+                                            ),
+                                          ),
+
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children:[
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  "${date.hour}:${date.minute}\t\t${date.day}/${date.month}/${date.year}",
+
+                                                ),
+                                              )
+                                            ],
+                                          )
+
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      })
+                ],)
       ),
     );
   }
 
-
-
-  Widget title(){
+  Widget title() {
     return RichText(
-        text:const  TextSpan(
-            children: [
-              TextSpan(
-                  text: "አ ቦ ",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20
-                  )
-              ),
-              TextSpan(
-                  text: "ጊ ዳ",
-                  style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20
-                  )
-              )
-            ])
-    );
+        text: const TextSpan(children: [
+      TextSpan(
+          text: "አ ቦ ",
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
+      TextSpan(
+          text: "ጊ ዳ",
+          style: TextStyle(
+              color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20))
+    ]));
   }
 }
-
