@@ -391,6 +391,46 @@ class _QuizPageState extends State<QuizPage> {
                               const SizedBox(
                                 height: 50,
                               ),
+
+                              GestureDetector(
+                                onTap: (){
+                                  showDialog(context: context, builder: (context) =>AlertDialog(
+                                    title:const Text("EXPLANATION"),
+                                    content:  Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                                      child: Text(data['description']),
+                                    ),
+                                  ));
+                                },
+                                child: Container(
+                                  width: 150,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.circular(20),
+                                      boxShadow:const [
+                                        BoxShadow(
+                                            color: Colors.black,
+                                            offset: Offset(0, 0),
+                                            blurRadius: 5
+                                        )
+                                      ]
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      "EXPLAIN",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(
+                                height: 100,
+                              ),
                             ],
                           ),
                         )

@@ -1,4 +1,6 @@
 import 'package:abogida/Pages/class_page.dart';
+import 'package:abogida/auth_service.dart';
+import 'package:abogida/entry.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +22,19 @@ class _AppState extends State<App> {
           backgroundColor: Colors.white,
           title: title(),
           centerTitle: true,
+          actions: [
+            GestureDetector(
+              onTap: () async {
+                await Auth().signOut();
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login()));
+              },
+              child:const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.0 , vertical: 10),
+                child: Icon(Icons.exit_to_app , size: 25,),
+              ),
+            ),
+          ],
+          iconTheme: IconThemeData(color: Colors.black),
           bottom: TabBar(
             padding:const EdgeInsets.all(10),
             labelColor: Colors.black,
@@ -34,13 +49,14 @@ class _AppState extends State<App> {
               ),
               Tab(
                 child: Text(
-                  "CLASS",
+                  "DEPARTMENT",
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
             ],
           ),
         ),
+
         body:TabBarView(
                 children: [
                   //                   post page
@@ -67,13 +83,7 @@ class _AppState extends State<App> {
                                   decoration:BoxDecoration(
                                       color: Colors.grey.shade700,
                                       borderRadius: BorderRadius.circular(20),
-                                      boxShadow:const [
-                                        BoxShadow(
-                                          color: Colors.black,
-                                          offset: Offset(0, 0),
-                                          blurRadius: 10,
-                                        ),
-                                      ]
+
                                   ),
                                   child: Column(
                                     children:[
@@ -83,7 +93,7 @@ class _AppState extends State<App> {
                                           child: Text(
                                             data["message"],
                                             style:const TextStyle(
-                                                fontSize: 17,
+                                                fontSize: 15,
                                                 color: Colors.white
                                             ),
                                           ),
@@ -95,7 +105,9 @@ class _AppState extends State<App> {
                                           color: Colors.white70
                                         ),
                                       ),
-
+                                      const SizedBox(
+                                        height: 10,
+                                      )
                                     ],
                                   ),
                                 ),
@@ -132,7 +144,14 @@ class _AppState extends State<App> {
                                     ),
                                     decoration: BoxDecoration(
                                       color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(20)
+                                      borderRadius: BorderRadius.circular(20),
+                                        boxShadow:const [
+                                          BoxShadow(
+                                            color: Colors.black,
+                                            offset: Offset(0, 0),
+                                            blurRadius: 10,
+                                          ),
+                                        ]
                                     ),
                                     child:  Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -158,7 +177,7 @@ class _AppState extends State<App> {
                                               data['class_description'],
                                               style:const TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 17,
+                                                fontSize: 15,
                                               ),
                                             ),
                                           ),

@@ -86,15 +86,8 @@ class _ClassPageState extends State<ClassPage> {
 
                               ),
                               decoration:BoxDecoration(
-                                  color: Colors.blue[500],
+                                  color: Colors.grey.shade700,
                                   borderRadius: BorderRadius.circular(20),
-                                  boxShadow:const [
-                                    BoxShadow(
-                                      color: Colors.black,
-                                      offset: Offset(0, 0),
-                                      blurRadius: 10,
-                                    ),
-                                  ]
                               ),
                               child: Column(
                                 children:[
@@ -104,7 +97,7 @@ class _ClassPageState extends State<ClassPage> {
                                       child: Text(
                                         data["message"],
                                         style:const TextStyle(
-                                            fontSize: 17,
+                                            fontSize: 15,
                                             color: Colors.white
                                         ),
                                       ),
@@ -116,6 +109,9 @@ class _ClassPageState extends State<ClassPage> {
                                         color: Colors.white70
                                     ),
                                   ),
+                                  const SizedBox(
+                                    height: 10,
+                                  )
 
                                 ],
                               ),
@@ -124,8 +120,8 @@ class _ClassPageState extends State<ClassPage> {
                         });
                   }),
 
+              // QUIZ
               //==================================================================
-
               StreamBuilder(
                   stream: FirebaseFirestore.instance.collection('class').doc(classId).collection('quiz').snapshots(),
                   builder: (context, snapshot){
@@ -152,13 +148,13 @@ class _ClassPageState extends State<ClassPage> {
                                   minHeight: 100
                                 ),
                                 decoration:BoxDecoration(
-                                    color: Colors.blue[800],
+                                    color: Colors.blue[600],
                                     borderRadius: BorderRadius.circular(20),
                                     boxShadow:const [
                                       BoxShadow(
                                           color: Colors.black,
                                           offset: Offset(0,0),
-                                          blurRadius: 10
+                                          blurRadius: 15
                                       )
                                     ]
                                 ),
@@ -171,7 +167,7 @@ class _ClassPageState extends State<ClassPage> {
                                       data['type'].toString().toUpperCase(),
                                       style:const TextStyle(
                                           color: Colors.white,
-                                          fontSize: 30,
+                                          fontSize: 25,
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
