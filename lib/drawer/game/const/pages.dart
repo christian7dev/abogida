@@ -1,23 +1,18 @@
+
 import 'package:flutter/material.dart';
 
-Widget pageRow() {
+Widget pageRow(username) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    child: Column(
       children: [
-        InkWell(
-          onTap: () {},
-          child: const Image(
-            image: AssetImage("assets/telegram.png"),
-            height: 30,
-            width: 30,
+        const Text("Join OUR Telegram Channel"),
+        Text(
+            username,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold
           ),
-        ),
-        InkWell(
-          onTap: () {},
-          child: const Text("Join Telegram Channel"),
-        ),
+        )
       ],
     ),
   );

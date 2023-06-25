@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+
 import '../const/pages.dart';
 
 class WinPage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _WinPageState extends State<WinPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(right: 10.0 , left: 10),
@@ -53,7 +54,7 @@ class _WinPageState extends State<WinPage> {
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 25,
-                          color: Colors.blue),
+                          color: Colors.red),
                     ),
                   ),
                 ),
@@ -62,7 +63,7 @@ class _WinPageState extends State<WinPage> {
                 ),
                 const Center(
                   child: Text(
-                    "Contact us on Telegram",
+                    "Contact us on our Telegram bot",
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.blue),
                   ),
@@ -71,22 +72,22 @@ class _WinPageState extends State<WinPage> {
                   height: 5,
                 ),
                 Center(
-                  child: InkWell(
-                    onTap: () {},
-                    child: const Text(
-                      "@EXRBOT",
+                    child: Text(
+                      data['bot_address'].toString(),
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
-                          color: Colors.blue),
+                          color: Colors.blue[700]),
                     ),
-                  ),
                 ),
                 const Spacer(),
                 data['promo_link'].toString().isNotEmpty
                     ? sBanner(data['promo_link'].toString())
                     : Container(),
-                pageRow(),
+                pageRow(data['username'].toString()),
+                const SizedBox(
+                  height: 10,
+                ),
               ],
             ),
           ));

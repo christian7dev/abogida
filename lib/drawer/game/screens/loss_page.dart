@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../const/pages.dart';
 
@@ -59,7 +60,10 @@ class _LossPageState extends State<LossPage> {
                 data['promo_link'].toString().isNotEmpty
                     ? sBanner(data['promo_link'].toString())
                     : Container(),
-                pageRow(),
+                pageRow(data['username'].toString()),
+                const SizedBox(
+                  height: 10,
+                ),
               ],
             ),
           ));

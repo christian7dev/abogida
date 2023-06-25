@@ -167,7 +167,7 @@ class _QuizPageState extends State<QuizPage> {
                               constraints: const BoxConstraints(maxHeight: 200),
                               child: Center(
                                 child: Padding(
-                                  padding: EdgeInsets.all(10.0),
+                                  padding: const EdgeInsets.all(10.0),
                                   child: SingleChildScrollView(
                                     child: Text(
                                       data['question'],

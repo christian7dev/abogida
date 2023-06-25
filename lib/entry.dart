@@ -22,10 +22,8 @@ class _LoginState extends State<Login> {
               height: 70,
             ),
             Center(
-              child: Container(
-                child: Center(
-                  child: Image.asset("assets/logo2.png"),
-                ),
+              child: Center(
+                child: Image.asset("assets/logo2.png"),
               ),
             ),
 

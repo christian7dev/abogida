@@ -34,7 +34,7 @@ class _ClassPageState extends State<ClassPage> {
             ),
             centerTitle: true,
             bottom:  TabBar(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               labelColor: Colors.black,
               indicator: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
@@ -70,7 +70,7 @@ class _ClassPageState extends State<ClassPage> {
                   stream: FirebaseFirestore.instance.collection('class').doc(classId).collection('post').snapshots(),
                   builder: (context , snapshot){
                     if(snapshot.connectionState == ConnectionState.waiting){
-                      return Center(child: CircularProgressIndicator(),);
+                      return const Center(child: CircularProgressIndicator(),);
                     }
                     return ListView.builder(
                         itemCount: snapshot.data!.size,
